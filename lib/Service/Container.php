@@ -29,27 +29,27 @@ class Container
         return $this->pdo;
     }
 
-    /**
-     * @return ShipLoader
-     */
-    public function getShipLoader()
-    {
-        if ($this->shipLoader === null){
-            $this->shipLoader = new ShipLoader($this->getPDO());
-        }
-
-        return $this->shipLoader;
-    }
-
-    /**
-     * @return BattleManager
-     */
-    public function getBattleManager()
-    {
-        if ($this->battleManager === null){
-            $this->battleManager = new BattleManager();
-        }
-
-        return $this->battleManager;
-    }
+//    /**
+//     * @return ShipLoader
+//     */
+//    public function getShipLoader()
+//    {
+//        if ($this->shipLoader === null){
+//            $this->shipLoader = new ShipLoader($this->getPDO());
+//        }
+//
+//        return $this->shipLoader;
+//    }
+//
+//    /**
+//     * @return BattleManager
+//     */
+//    public function getBattleManager()
+//    {
+//        if ($this->battleManager === null){
+//            $this->battleManager = new BattleManager();
+//        }
+//
+//        return $this->battleManager;
+//    }
 }
