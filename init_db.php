@@ -30,7 +30,7 @@ $pdo->exec('CREATE TABLE IF NOT EXISTS `user` (
  `birthday` date NOT NULL,
  `gender` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
  `emailAddress` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
- `password` (50) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
  `role` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci');

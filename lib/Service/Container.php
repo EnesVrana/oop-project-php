@@ -4,7 +4,6 @@ class Container
 {
     private $configuration;
     private $pdo;
-    private $shipLoader;
     private $UserManager; //try it >>>>>>>>>
 
     public function __construct(array $configuration)
@@ -18,6 +17,8 @@ class Container
     {
         if ($this->pdo === null)
         {
+
+
             $this->pdo = new PDO(
                 $this->configuration['db_dsn'],
                 $this->configuration['db_user'],
@@ -44,7 +45,7 @@ class Container
 //    /**
 //     * @return BattleManager
 //     */
-//    public function getBattleManager()
+//    public function getUserManager()
 //    {
 //        if ($this->battleManager === null){
 //            $this->battleManager = new BattleManager();

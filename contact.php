@@ -1,9 +1,8 @@
 <?php
-require 'lib/functions.php';
-?>
-<?php
 require 'layout/header.php';
+require 'bootstrap.php';
 
+$userManager = new UserManager();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -12,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $newMessage = $_POST['message'];
         }
 
-    $messages = get_messages();
+    $messages = $userManager->get_messages();
     $newMessageArray = array(
         'id' => $_SESSION['id'],
         'firstName' => $_SESSION['firstName'],
@@ -20,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'message' => $newMessage,
     );
     $messages[] = $newMessageArray;
-    save_messages($messages);
+    $userManager->save_messages($messages);
     }
 }
 ?>
@@ -66,7 +65,7 @@ if (isset($_SESSION['role'])){
 
 
                                 <?php
-                                $messages = array_reverse(get_messages());
+                                $messages = array_reverse($userManager->get_messages());
 
                                 foreach ($messages as $message){
                                 ?>

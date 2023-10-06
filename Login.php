@@ -1,8 +1,11 @@
 <?php
+
 require 'layout/header.php';
-require 'vendor/autoload.php';
-require 'lib/functions.php';
-require_once 'lib/Model/credential.php';
+require 'bootstrap.php';
+
+//require 'vendor/autoload.php';
+//require 'lib/functions.php';
+//require_once 'lib/Model/credential.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['emailAddress'])) {
@@ -20,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $loginUser = new Credential();
     $loginUser->setEmailAddress($emailAddress);
     $loginUser->setPassword($password);
-
-    checkUserExist($loginUser);
+    $userManager = new UserManager();
+    $userManager->checkUserExist($loginUser);
 
 }
 

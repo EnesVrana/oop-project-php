@@ -1,67 +1,31 @@
 <?php
 require 'layout/header.php';
-require 'lib/functions.php';
-require 'vendor/autoload.php';
-require_once 'lib/Model/user.php';
+require 'bootstrap.php';
 
+$userManager = new UserManager();
+$validator = new Validator();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if (isset($_POST['firstName'])){
-        $firstName = $_POST['firstName'];
-    }
-    else{
-        $firstName = '';
-    }
-    if (isset($_POST['lastName'])){
-        $lastName = $_POST['lastName'];
-    }
-    else{
-        $lastName = '';
-    }
-    if (isset($_POST['birthday'])){
-        $birthday = $_POST['birthday'];
-    }
-    else{
-        $birthday = '';
-    }
-    if (isset($_POST['gender'])){
-        $gender = $_POST['gender'];
-    }
-    else{
-        $gender = '';
-    }
-    if (isset($_POST['emailAddress'])){
-        $emailAddress = $_POST['emailAddress'];
-    }
-    else{
-        $emailAddress = '';
-    }
-    if (isset($_POST['password'])){
-        $password = $_POST['password'];
-    }
-    else{
-        $password = '';
-    }
-    if (isset($_POST['role'])){
-        $role = $_POST['role'];
-    }
-    else{
-        $role = '';
-    }
 
     $newUser = new User();
-    $newUser->setFirstName($firstName);
-    $newUser->setLastName($lastName);
-    $newUser->setBirthday($birthday);
-    $newUser->setGender($gender);
-    $newUser->setEmailAddress($emailAddress);
-    $newUser->setPassword($password);
-    $newUser->setRole($role);
+    $newUser->setFirstName("$_POST[firstName]");
+    $newUser->setLastName("$_POST[lastName]");
+    $newUser->setBirthday("$_POST[birthday]");
+    $newUser->setGender("$_POST[gender]");
+    $newUser->setEmailAddress("$_POST[emailAddress]");
+    $newUser->setPassword("$_POST[password]");
+    $newUser->setRole("$_POST[role]");
 
-    save_user($newUser);
+    $validationErr = $validator->validate($newUser);
 
+    if ($validationErr === true){
+        $emailExists = $userManager->save_user($newUser);
+         $validationErr = new User();
+    }
 }
-
+if (!isset($validationErr)){
+    $validationErr = new User;
+}
 ?>
 
 <div class="div">
@@ -78,6 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <div class="col-md-6 mb-4">
 
                                         <div class="form-outline">
+                                            <?php
+                                            if (!empty($validationErr->getFirstName())){ ?>
+                                                <label class="form-label" for="firstName" style="color: red">Invalid Fisrt Name! It must include only letters.</label><br>
+                                            <?php } ?>
                                             <label class="form-label" for="firstName">First Name</label>
                                             <input type="text" id="firstName" name="firstName" class="form-control form-control-lg" />
                                         </div>
@@ -87,7 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <div class="col-md-6 mb-4">
 
                                         <div class="form-outline">
-                                            <label class="form-label" for="lastName">Last Name</label>
+                                            <?php
+                                            if (!empty($validationErr->getLastName())){ ?>
+                                                <label class="form-label" for="firstName" style="color: red">Invalid Last Name! It must include only letters.</label><br>
+                                            <?php } ?>                                            <label class="form-label" for="lastName">Last Name</label>
                                             <input type="text" id="lastName" name="lastName" class="form-control form-control-lg" />
                                         </div>
 
@@ -98,14 +69,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <div class="col-md-6 mb-4 d-flex align-items-center">
 
                                         <div class="form-outline datepicker w-100">
-                                            <label for="birthday" class="form-label">Birthday</label>
+                                            <?php
+                                            if (!empty($validationErr->getBirthday())){ ?>
+                                                <label class="form-label" for="firstName" style="color: red">Invalid Birthday! We don't Allow ghosts or unborn babies here.</label><br>
+                                            <?php } ?>                                            <label for="birthday" class="form-label">Birthday</label>
                                             <input type="date" name="birthday" class="form-control form-control-lg" id="birthday" />
                                         </div>
 
 
                                     </div>
                                     <div class="col-md-6 mb-4">
-
                                         <h3 class="mb-2 pb-1">Gender: </h3>
 
                                         <div class="form-check form-check-inline">
@@ -127,6 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <div class="col-md-6 mb-4 pb-2">
 
                                         <div class="form-outline">
+                                            <?php
+                                            if (!empty($validationErr->getEmailAddress())){ ?>
+                                                <label class="form-label" for="firstName" style="color: red">Invalid email address!</label><br>
+                                            <?php } ?>
+                                            <?php
+                                            if (isset($emailExists)){ ?>
+                                                <label class="form-label" for="firstName" style="color: red"><?php echo $emailExists ?></label><br>
+                                            <?php } ?>
                                             <label class="form-label" for="emailAddress">Email</label>
                                             <input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg" />
                                         </div>
@@ -136,7 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <div class="col-md-6 mb-4 pb-2">
 
                                         <div class="form-outline">
-                                                <label class="form-label" for="password">Password</label>
+                                            <?php
+                                            if (!empty($validationErr->getPassword())){ ?>
+                                                <label class="form-label" for="firstName" style="color: red"><?php echo $validationErr->getPassword() ?></label><br>
+                                            <?php } ?>                                                <label class="form-label" for="password">Password</label>
                                             <input type="password" name="password" id="password" class="form-control form-control-lg" />
                                         </div>
 

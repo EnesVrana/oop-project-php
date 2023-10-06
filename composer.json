@@ -17,6 +17,7 @@
     "require": {
         "ext-mysqli": "*",
         "ext-mysql": "*",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+        "ext-ctype": "*"
     }
 }

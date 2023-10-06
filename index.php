@@ -1,10 +1,8 @@
 <?php
 //session_start();
-    require 'lib/functions.php';
+require 'bootstrap.php';
 
-?>
-
-<?php require 'layout/header.php'; ?>
+require 'layout/header.php'; ?>
 
     <div class="jumbotron">
         <div class="container">
